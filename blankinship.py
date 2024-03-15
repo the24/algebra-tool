@@ -201,6 +201,10 @@ class Polynomial:
 
         return M
     
+    def __truediv__(self, other):
+        if isinstance(other, (int, Rational)):
+            return self*(Rational(1,1)/other)
+    
     def __rmul__(self, other):
         return self * other
     
@@ -320,9 +324,11 @@ class GCDPolynomialCalculator:
             if print_step: print(self, "\n")
         
         if self.P == 0:
-            return (self.y1, self.y2, self.Q)
+            main_coef = self.Q[len(self.Q)-1]
+            return (self.y1/main_coef, self.y2/main_coef, self.Q/main_coef)
         elif self.Q == 0:
-            return (self.x1, self.x2, self.P)
+            main_coef = self.P[len(self.P)-1]
+            return (self.x1/main_coef, self.x2/main_coef, self.P/main_coef)
 
 
 if __name__ == "__main__":
